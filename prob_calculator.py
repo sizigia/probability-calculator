@@ -10,6 +10,30 @@ class Hat:
             for key, value in kwargs.items():
                 self.contents.extend([key] * value)
 
+    def draw(self, amount):
+        draws = []
+        for _ in range(amount):
+            if self.contents:
+                item = random.choice(self.contents)
+                draws.append(item)
+                self.contents.remove(item)
+            else:
+                return draws
+
+        return draws
+
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-    pass
+    m = 0
+    colors = expected_balls.keys()
+
+    for _ in range(num_experiments):
+        if hat.contents:
+            draw_ = hat.draw(num_balls_drawn)
+            actual_balls_drawn = [draw_.count(color) for color in colors]
+
+            if (actual_balls_drawn >=
+                    list(expected_balls.values())):
+                m += 1
+
+    return m / num_experiments
