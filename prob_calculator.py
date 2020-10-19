@@ -25,11 +25,12 @@ class Hat:
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     m = 0
-    colors = expected_balls.keys()
+    colors = list(expected_balls.keys())
 
     for _ in range(num_experiments):
         if hat.contents:
-            draw_ = hat.draw(num_balls_drawn)
+            hat_copy = copy.deepcopy(hat)
+            draw_ = hat_copy.draw(num_balls_drawn)
             actual_balls_drawn = [draw_.count(color) for color in colors]
 
             if (actual_balls_drawn >=
